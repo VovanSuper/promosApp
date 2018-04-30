@@ -1,0 +1,37 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button color="primary" icon-left menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{category.slug}}:Promociones</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let producto of productos" (click)="openProductPage(producto)">
+      <ion-thumbnail item-left>
+        <img src="{{producto.featured_src}}" />
+      </ion-thumbnail>
+      <button ion-item>
+        <h2>{{producto.title}}</h2>
+        <p text-wrap>
+          <span>{{producto.short_description.substring(0,50) + "..."}}</span>
+          <span>{{producto.price_html}}</span>
+        </p>
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content>
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

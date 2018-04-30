@@ -1,0 +1,24 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-card class="menu_ion_card">
+      <img src="assets/imgs/main_menu.jpg" />
+      <div class="card-title">Mil Promos</div>
+      <div class="card-subtitle">Promociones en toda tu comarca</div>
+    </ion-card>
+    <ion-list>
+      <ion-item *ngFor="let category of categories;let i=index" (click)="openCatPage(category)" menuClose>
+        <ion-icon item-left name="{{iconos[i]}}"></ion-icon>
+        <h2>{{category.name}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="homePage" #content swipeBackEnabled="false"></ion-nav>

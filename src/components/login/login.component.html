@@ -1,0 +1,21 @@
+<ion-card>
+  <ion-card-content>
+      <ion-item>
+          <ion-label floating>Email address</ion-label>
+          <ion-input type="email" [(ngModel)]="account.email">   </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="account.password">   </ion-input>
+      </ion-item>
+  </ion-card-content>
+  <ion-row class="loginForm">
+    <div>
+     <button ion-button (click)="NavigateToPageRegister()" color="secondary">Register</button>
+     <button ion-button (click)="login()" >Log in</button>
+     <button ion-button (click)="loginWithFacebook()"> Login with Facebook </button>
+     <button ion-button (click)="loginWithGoogle()"> Login with Google+ </button>
+     <button ion-button (click)="resetPassword(account.email)"> Forgot password?? </button>
+    </div>
+  </ion-row>
+</ion-card>
