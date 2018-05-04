@@ -108,11 +108,7 @@ export class HomePage {
   if ( JSON.parse(data.body).products.length < 10){
     console.log("Ya no hay más productos")
     event.enable(false); //Disable infinite scroll
-    this.toast.create({
-      message:'No hay más productos disponibles',
-      duration:5000
-    }).present();
-  }
+   }
 
    }).catch((error)=> console.log("Error cogiendo productos " + error.message));
 }
@@ -124,5 +120,9 @@ openProductPage(product){
 
 share(){
 
+}
+
+uploadPromotion(){
+  this.navCtrl.push('FormularioPage');
 }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController,IonicPage } from 'ionic-angular';
+import { NavController, NavParams, ToastController, IonicPage } from 'ionic-angular';
 import * as WC from 'woocommerce-api'; //Importamos librería completa
 
 
@@ -28,7 +28,7 @@ export class ProductosPCategoriaPage {
 
     this.page = 1;
     this.category = this.navParams.get('category');
-    this.moreProductos= [];
+    this.moreProductos = [];
 
     this.Woocommerce = WC({
       url: 'http://ilovealcazar.es',
@@ -45,14 +45,18 @@ export class ProductosPCategoriaPage {
 
   }
 
-  openProductPage(product){
-    this.navCtrl.push('ProductDetailsPage',{'product':product});
+  openProductPage(product) {
+    this.navCtrl.push('ProductDetailsPage', { 'product': product });
   }
 
 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductosPCategoriaPage');
+  }
+
+  uploadPromotion(){
+    this.navCtrl.push('FormularioPage');
   }
 
   loadMoreProducts(event) {
@@ -66,14 +70,10 @@ export class ProductosPCategoriaPage {
       }
 
       event.complete();
-      
-    
+
+
       if (prodAux.length < 10) {
         event.enable(false); //Disable infinite scroll
-        this.toast.create({
-          message: 'No hay más productos disponibles',
-          duration: 5000
-        }).present();
       }
 
     }).catch((error) => console.log("Error cogiendo productos " + error.message));

@@ -7,13 +7,51 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{category.slug}}:Promociones</ion-title>
+    <ion-title [innerHTML]="category.slug"></ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content>
+  <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
+
+
+  <div class="mainContent">
+  <ion-card *ngFor="let product of productos" (click)="openProductPage(product)">
+    <ion-card-header [innerHTML]="product.title"></ion-card-header>
+    <img images-filter [src]="product.featured_src" />   
+    <ion-card-content [innerHTML]="product.short_description"></ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-only (click)="regularShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="share"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only (click)="whatsappShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only (click)="facebookShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-facebook"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only (click)="twitterShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-instagram"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+  </div>
+
+
+<!--
+
   <ion-list>
     <ion-item *ngFor="let producto of productos" (click)="openProductPage(producto)">
       <ion-thumbnail item-left>
@@ -28,7 +66,7 @@
       </button>
     </ion-item>
   </ion-list>
-
+-->
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content>
 

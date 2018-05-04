@@ -2,6 +2,7 @@ import { Component,ViewChild } from '@angular/core';
 import { NavController, NavParams,IonicPage } from 'ionic-angular';
 import * as WC from 'woocommerce-api'; //Importamos librería completa
 import 'rxjs/add/operator/map';
+import { FormularioPage } from '../formulario/formulario';
 
 /**
  * Generated class for the MenuPage page.
@@ -67,6 +68,8 @@ export class MenuPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
   }
+
+  
 
  
   

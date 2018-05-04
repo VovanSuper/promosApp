@@ -4,6 +4,7 @@ import { LoginResponse } from '../../models/login/loginResponse.interface';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Account } from '../../models/account/account.interface';
 import firebase from 'firebase';
+import { FormularioPage } from '../../pages/formulario/formulario';
 
 
 
@@ -121,6 +122,27 @@ export class LoginComponent {
         );
 
     }
+  }
+
+  uploadPromotion(){
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        this.presentAlert('Información','Por favor inicie sesión para continuar');
+        unsubscribe();
+      } else {
+        this.navCtrl.push(FormularioPage);
+      }
+  });
+}
+
+
+  presentAlert(titulo:string,contenido:string) {
+    let alert = this.alertCtrl.create({
+      title: titulo,
+      subTitle: contenido,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 

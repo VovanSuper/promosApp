@@ -8,70 +8,81 @@
 </ion-header>
 
 <ion-content no-padding>
-  <ion-card class="fw"> <!-- Wrapping the slides moves it to the top of the page -->
+  <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
+
+  <ion-card class="fw">
+    <!-- Wrapping the slides moves it to the top of the page -->
     <ion-slides autoplay="3000" pager>
       <ion-slide *ngFor="let img of imgs">
-        <img src="assets/imgs/{{img}}.png"/>
+        <img src="assets/imgs/{{img}}.png" />
       </ion-slide>
     </ion-slides>
   </ion-card>
-
-  <!--<img src="assets/imgs/banner.jpg" class="fw"/> -->
-
- <!-- autoplay doesn´t work here...Programatically -->
- <!-- <ion-grid no-padding class="fw">
-    <ion-row>
-     
-      <ion-slides #productSlides>
-        <ion-slide *ngFor="let product of products">
-          <ion-card no-padding >
-            <img src="{{product.featured_src}}" />
-            <h1 padding center>{{product.title}}</h1>
-            <p padding center>{{product.short_description}} </p>
-
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-    </ion-row>  
-
-     
-  </ion-grid>-->
-
-  <ion-grid no-padding *ngIf="products != null">
-    <ion-row *ngIf="products != null">
-        <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 *ngFor="let product of products">
-            <ion-item no-lines>
-                <h2 card-title>{{product.title}}</h2>
-                <h3 card-subtitle text-wrap>{{product.short_description}}</h3>
-                <button item-end ion-button color="primary" button-action-shit (click)="share()">
-                        <ion-icon name="share"></ion-icon>
-                      </button>
-            </ion-item>
-            <ion-card (click)="openProductPage(product)">
-                <img images-filter [src]="product.featured_src" />
-            </ion-card>
+  <div class="mainContent">
+  <ion-card *ngFor="let product of products" (click)="openProductPage(product)">
+    <ion-card-header [innerHTML]="product.title"></ion-card-header>
+    <img images-filter [src]="product.featured_src" />   
+    <ion-card-content [innerHTML]="product.short_description"></ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-only (click)="regularShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="share"></ion-icon>
+          </button>
         </ion-col>
-    </ion-row>
-</ion-grid>
+        <ion-col>
+          <button ion-button icon-only (click)="whatsappShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only (click)="facebookShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-facebook"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only (click)="twitterShare(i)" color="primary" clear>
+            <ion-icon class="share-icon" name="logo-instagram"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-<ion-grid no-padding *ngIf="moreProductos != null">
-  <ion-row *ngIf="moreProductos != null">
-      <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 *ngFor="let producto of moreProductos">
-          <ion-item no-lines>
-              <h2 card-title>{{producto.title}}</h2>
-              <h3 card-subtitle text-wrap>{{producto.short_description}}</h3>
-              <button item-end ion-button color="primary" button-action-shit (click)="share()">
-                      <ion-icon name="share"></ion-icon>
-                    </button>
-          </ion-item>
-          <ion-card (click)="openProductPage(producto)">
-              <img images-filter [src]="producto.featured_src" />
-          </ion-card>
-      </ion-col>
-  </ion-row>
-</ion-grid>
+  </ion-card>
 
- 
+  <ion-card *ngFor="let producto of moreProductos" (click)="openProductPage(producto)">
+      <ion-card-header [innerHTML]="producto.title"></ion-card-header>
+      <img images-filter [src]="producto.featured_src" />     
+      <ion-card-content [innerHTML]="producto.short_description"></ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-only (click)="regularShare(i)" color="primary" clear>
+              <ion-icon class="share-icon" name="share"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-only (click)="whatsappShare(i)" color="primary" clear>
+              <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-only (click)="facebookShare(i)" color="primary" clear>
+              <ion-icon class="share-icon" name="logo-facebook"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-only (click)="twitterShare(i)" color="primary" clear>
+              <ion-icon class="share-icon" name="logo-instagram"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+    </ion-card>
+  </div>
+  
+    
   <!--En el evento va info de por donde se quedó el usuario en el scroll, etc....Información técnica
   de la situación del usuario -->
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">

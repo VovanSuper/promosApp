@@ -44,4 +44,8 @@ export class ProductDetailsPage {
     console.log('ionViewDidLoad ProductDetailsPage');
   }
 
+  uploadPromotion(){
+    this.navCtrl.push('FormularioPage');
+  }
+
 }

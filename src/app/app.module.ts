@@ -9,6 +9,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthProvider } from '../providers/auth/auth';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Camera } from '@ionic-native/camera';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { EmailProvider } from '../providers/email/email';
+import { ImageProvider } from '../providers/image/image';
 
 
 
@@ -50,6 +54,10 @@ const config = {
     AuthProvider,
     Facebook,
     GooglePlus,
+    EmailComposer,
+    Camera,
+    EmailProvider,
+    ImageProvider,
     
   ]
 })
