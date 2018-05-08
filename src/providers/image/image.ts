@@ -22,7 +22,10 @@ export class ImageProvider {
 
             this._CAMERA.getPicture(cameraOptions)
                 .then((data: any) => {
-                    resolve(data);
+                    let Data = data;
+                    resolve(Data);
+                },(error)=>{
+                    console.error(error);
                 });
 
         });

@@ -1,4 +1,9 @@
 <form [formGroup]="Emailform" (ngSubmit)="sendMessage()">
+ 
+  <ion-item margin-bottom>
+    <span ion-button color="primary" text-center block (click)="retrieveAttachment()">Adjuntar imagen</span>
+  </ion-item>
+
   <ion-item>
     <ion-label floating>Email</ion-label>
     <ion-input formControlName="email" type="email"></ion-input>
@@ -36,13 +41,8 @@
         Enviar</button>
     </ion-col>
   </ion-row>
-
-  <ion-row>
-    <ion-col text-center>
-      <button ion-button clear color="light" (click)="volver()">
-        Atrás
-      </button>
-    </ion-col>
+  <ion-row id="imagesRow">
+    <img  *ngFor="let image of attachmentArray" [src]="image" />
   </ion-row>
 
 </form>

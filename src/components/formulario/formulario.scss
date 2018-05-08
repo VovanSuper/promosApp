@@ -8,5 +8,26 @@ formulario {
         
     }
 
+
+    #imagesRow{
+        
+        ion-row{
+            text-align: justify;
+        }
+           
+               
+        img {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+        
+        ion-row:after {
+            content: '';
+            display: inline-block;
+            width: 100%;
+        }
+    }
+
   
+}
 }

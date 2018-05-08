@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { AlertController } from 'ionic-angular';
 
 
 @Injectable()
 export class EmailProvider {
 
-  constructor(private _EMAIL: EmailComposer) { }
+  constructor(private _EMAIL: EmailComposer,private AlertService:AlertController) { }
 
-  sendEmail(to: string,
-    cc: string,
+  sendEmail(to: any,
+    cc: any,
     subject: string,
     body: string,
-    attachment_1?: string,
-    attachment_2?: string,
-    attachment_3?: string,): void {
+    attachment_1: any,
+    attachment_2?: any,
+    attachment_3?: any,): void {
     // Use the plugin isAvailable method to check whether
     // the user has configured an email account
     this._EMAIL.isAvailable()
@@ -39,7 +40,8 @@ export class EmailProvider {
 
               ],
               subject: subject,
-              body: body
+              body: body,
+              isHtml:true
             };
 
             // Open the device e-mail client and create
@@ -54,8 +56,18 @@ export class EmailProvider {
       })
       .catch((error: any) => {
         console.log('User does not appear to have device e-mail account');
+        this.displayMessage('Información','Es necesaria una cuenta de e-mail configurada en su dispositivo');
         console.dir(error);
       });
+  }
+
+  displayMessage(title: string, subTitle: string): void {
+    let alert: any = this.AlertService.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }

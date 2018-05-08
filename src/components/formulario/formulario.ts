@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Platform } from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ImageProvider } from '../../providers/image/image';
 import { EmailProvider } from '../../providers/email/email';
@@ -19,18 +19,20 @@ import { EmailProvider } from '../../providers/email/email';
 })
 export class FormularioComponent {
 
+  
+
   public Emailform: FormGroup;
   private attachment1: any = null;
   private attachment2: any = null;
   private attachment3: any = null;
-
-  private attachmentArray: any[];
+  attachmentArray: any[];
 
   constructor(private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private ImageService: ImageProvider,
     private EmailService: EmailProvider,
-    private AlertService: AlertController) {
+    private AlertService: AlertController,
+    private platform:Platform) {
 
     this.attachmentArray = [this.attachment1, this.attachment2, this.attachment3];
 
@@ -54,28 +56,49 @@ export class FormularioComponent {
     alert.present();
   }
 
-
+ionViewWillLoad(){
+  this.attachmentArray=[];
+}
 
   retrieveAttachment(): void {
-    var haySitio = false;
-    this.ImageService.selectPhotograph()
-      .then((attachment: any) => {
-        // Assign retrieved image to private property
-        // which we'll subsequently access within the
-        // sendMessage method
-        for (var i = 0; i < this.attachmentArray.length; i++) {
-          if (!this.attachmentArray[i] || !this.attachmentArray[i] == null) {
-            haySitio = true;
-            this.attachmentArray[i] = attachment;
+    this.platform.ready().then(()=>{
+      var haySitio = false;
+      this.ImageService.selectPhotograph()
+        .then((attachment: any) => {
+          // Assign retrieved image to private property
+          // which we'll subsequently access within the
+          // sendMessage method
+          for (var i = 0; i < this.attachmentArray.length; i++) {
+            if (!this.attachmentArray[i] || !this.attachmentArray[i] == null) {
+              haySitio = true;
+             /* for(var e=0;e<attachment.length;e++){
+                this.attachmentArray[i]+=attachment[e];
+                if(attachment[e] ==="?"){
+                  this.attachmentArray=this.attachmentArray[i].replace(/\?/g,'');
+                  this.attachmentArray[i].trim();
+                  break;
+                }
+
+              }
+
+              */
+              this.attachmentArray[i] = attachment;
+              console.log("Esto tiene la imagen ") + attachment;
+              break;
+            }
           }
-        }
-
-        if (!haySitio) {
-          this.displayMessage('Información', 'Sólo puede adjutar 3 imágenes');
-        }
-
-
-      });
+  
+          if (!haySitio) {
+            this.displayMessage('Información', 'Sólo puede adjutar 3 imágenes');
+            for(let attach of this.attachmentArray){
+              console.log(attach);
+            }
+          }
+  
+  
+        });
+    });
+  
   }
 
   volver() {
@@ -87,12 +110,12 @@ export class FormularioComponent {
     let to: string = 'comercial@ilovealcazar.com',
       cc: string = 'davidapuntes@hotmail.com',
       subject: string = 'Nueva Promoción',
-      message: string = " Email origen: " + this.Emailform.controls["email"].value
-      + " Negocio: " + this.Emailform.controls["empresa"].value 
-      + " Teléfono: " + this.Emailform.controls["telefono"].value 
-      + " Dirección: " + this.Emailform.controls["direccion"].value 
-      + " Descripcion corta: " + this.Emailform.controls["descripcion_corta"].value 
-      + " Dirección: " + this.Emailform.controls["descripcion_larga"].value 
+      message: string = " Email origen: " + this.Emailform.controls["email"].value + "/n" +
+      + " Negocio: " + this.Emailform.controls["empresa"].value  + "/n" +
+      + " Teléfono: " + this.Emailform.controls["telefono"].value + "/n" +
+      + " Dirección: " + this.Emailform.controls["direccion"].value + "/n" +
+      + " Descripcion corta: " + this.Emailform.controls["descripcion_corta"].value + "/n" +
+      + " Dirección: " + this.Emailform.controls["descripcion_larga"].value + "/n" 
 
 
     // Has the user selected an attachment?
@@ -100,15 +123,18 @@ export class FormularioComponent {
       // If so call the sendEmail method of the EmailProvider service, pass in
       // the retrieved form data and watch the magic happen! :)
       this.EmailService.sendEmail(to, cc, subject, message, this.attachment1);
+      this.attachmentArray=[];
     }
 
     else if (this.attachmentArray.length == 2) {
 
       this.EmailService.sendEmail(to, cc, subject, message, this.attachment1, this.attachment2);
+      this.attachmentArray=[];
     }
     else if (this.attachmentArray.length == 3) {
 
       this.EmailService.sendEmail(to, cc, subject, message, this.attachment1, this.attachment2, this.attachment3);
+      this.attachmentArray=[];
     }
 
 
