@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, IonicPage } from 'ionic-angular';
 import * as WC from 'woocommerce-api'; //Importamos librería completa
+import { ShareProvider } from '../../providers/share/share';
 
 
 /**
@@ -17,18 +18,19 @@ import * as WC from 'woocommerce-api'; //Importamos librería completa
 })
 export class ProductosPCategoriaPage {
   Woocommerce: any;
-  productos: any[];
   page: number;
   category: any;
-  moreProductos: any[];
+  productos: any[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private toast: ToastController) {
+    private toast: ToastController,
+    public shareProv:ShareProvider) {
 
     this.page = 1;
+    this.productos = [];   
     this.category = this.navParams.get('category');
-    this.moreProductos = [];
+   
 
     this.Woocommerce = WC({
       url: 'http://ilovealcazar.es',
@@ -60,19 +62,24 @@ export class ProductosPCategoriaPage {
   }
 
   loadMoreProducts(event) {
-
     this.page++;
-
-    this.Woocommerce.getAsync('products?filter[category]=' + this.category.slug + '&page=' + this.page).then((data) => {
+    this.Woocommerce.getAsync("products?filter[category]=" + this.category.slug + "&page=" + this.page).then((data) => {
       let prodAux = JSON.parse(data.body).products;
       for (var i = 0; i < prodAux.length; i++) {
-        this.moreProductos.push(prodAux[i]);
+        console.log(prodAux[i]);
+        this.productos.push(prodAux[i]);
       }
+
+      console.log("Productos segunda página cogidos... + " + this.productos.length);
+      //Tenemos que indicar a Angular que ya debemos terminar la tarea asociada al evento recibido
 
       event.complete();
 
 
-      if (prodAux.length < 10) {
+      //Si cogemos de una tirada, menos de 10 productos, significará que hemos llegado al final
+
+      if (prodAux < 10) {
+        console.log("Ya no hay más productos")
         event.enable(false); //Disable infinite scroll
       }
 

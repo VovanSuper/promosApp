@@ -7,32 +7,32 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{product.title}}</ion-title>
+    <ion-title [innerHTML]='product.title'></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
+  <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
 
   <ion-card>
     <ion-card-content>
       <ion-slides autoplay="3000">
         <!--En el slider, tendremos un slide por cada imagen que haya en el array de imágenes del producto -->
         <ion-slide *ngFor="let image of product.images">
-          <img src="{{image.src}}" /> </ion-slide>
+          <img [src]="image.src" /> </ion-slide>
       </ion-slides>
     </ion-card-content>
   </ion-card>
   <ion-card>
     <ion-card-content>
-      <ion-card-title>{{product.title}}</ion-card-title>
+      <ion-card-title [innerHTML]="product.title"> </ion-card-title>
       <ion-chip *ngFor="let cat of product.categories" style="margin-left: 5px;">
-        <ion-label color="danger">{{cat}}</ion-label>
+        <ion-label color="danger" [innerHTML]="cat"></ion-label>
       </ion-chip>
 
-      <p>{{product.description}}</p>
+      <p [innerHTML]="product.description"></p>
 
       <ion-card *ngIf="product.attributes.length > 0">
         <ion-card-content>
@@ -42,47 +42,14 @@
           <ion-grid>
             <ion-row *ngFor="let atributo of product.attributes">
               <!-- Consider 1 row 12 columns width -->
-              <ion-col col-4>{{atributo.name}}</ion-col>
-              <ion-col col-8 *ngFor="let option of atributo.options">{{option}}</ion-col>
+              <ion-col col-4 [innerHTML]="atributo.name"></ion-col>
+              <ion-col col-8 *ngFor="let option of atributo.options" [innerHTML]="option"></ion-col>
               <!-- For each attribute name we can have multiple values (options) -->
             </ion-row>
           </ion-grid>
         </ion-card-content>
       </ion-card>
     </ion-card-content>
-    <ion-card *ngIf="reviews.length > 0">
-      <ion-card-content>
-        <ion-card-title>Reviews</ion-card-title>
-        <ion-grid>
-          <ion-row *ngFor="let review of reviews">
-            <ion-col col-4>
-              <b>{{review.reviewer_name}}</b>
-              <br/>
-              <span *ngIf="review.rating >=1">
-                <ion-icon style="color:#d4af37" small name="star"></ion-icon>
-              </span>
-              <span *ngIf="review.rating >=2">
-                <ion-icon style="color:#d4af37" small name="star"></ion-icon>
-              </span>
-              <span *ngIf="review.rating >=3">
-                <ion-icon style="color:#d4af37" small name="star"></ion-icon>
-              </span>
-              <span *ngIf="review.rating >=4">
-                <ion-icon  style="color:#d4af37" small name="star"></ion-icon>
-              </span>
-              <span *ngIf="review.rating >=5">
-                <ion-icon style="color:#d4af37" small name="star"></ion-icon>
-              </span>
-            </ion-col>
-            <ion-col col-8>
-              {{review.review}}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-
-    </ion-card>
-
   </ion-card>
 
 

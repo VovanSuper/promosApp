@@ -91,6 +91,12 @@
         <variable name="APP_ID" value="2116375048392669" />
         <variable name="APP_NAME" value="PromosApp" />
     </plugin>
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.0" />
+    <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-googlemaps" spec="^2.3.3">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyBTvCXZEaxEpdpM7CE2Qda8vqfbRfAwJDA" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyBPmr6mHgg6fA6B_T_3l2hSdKubDqr0p1g" />
+        <variable name="PLAY_SERVICES_VERSION" value="15.0.1" />
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="26.1.0" />
+    </plugin>
 </widget>

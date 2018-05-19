@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 @Injectable()
 export class ImageProvider {
 
-    constructor(private _CAMERA: Camera) { }
+    public cameraImage: String
+
+    constructor(public http: Http,
+        private _CAMERA: Camera) {
+    }
 
 
-    selectPhotograph(): Promise<any> {
-        return new Promise((resolve) => {
+    selectImage(): Promise<any> {
+        return new Promise(resolve => {
             let cameraOptions: CameraOptions = {
                 sourceType: this._CAMERA.PictureSourceType.PHOTOLIBRARY,
-                destinationType: this._CAMERA.DestinationType.FILE_URI,
+                destinationType: this._CAMERA.DestinationType.DATA_URL,
                 quality: 100,
                 targetWidth: 320,
                 targetHeight: 240,
@@ -21,14 +27,14 @@ export class ImageProvider {
             };
 
             this._CAMERA.getPicture(cameraOptions)
-                .then((data: any) => {
-                    let Data = data;
-                    resolve(Data);
-                },(error)=>{
-                    console.error(error);
+                .then((data) => {
+                    this.cameraImage = "data:image/jpeg;base64," + data;
+                    resolve(this.cameraImage);
                 });
+
 
         });
     }
+
 
 }

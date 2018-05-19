@@ -21,6 +21,7 @@ export class MenuPage {
   Woocommerce:any;
   categories:any[];
   iconos:any[];
+
   //Recordar que con el viewChild podíamos acceder al html desde el ts
   //Aquí estamos acciendo al nav-bar
   @ViewChild('content') childController: NavController;
@@ -34,7 +35,10 @@ export class MenuPage {
     this.categories=[];
 
     //Esto lo hago "a pelo, según el número de categorías"
-    this.iconos=['beer','pizza','bicycle','briefcase','cafe'];
+    //Va en orden alfabético
+    //Comer,comprar,ocio,pruebas,servicios,todo
+    this.iconos=[];
+ 
 
     this.Woocommerce=WC({
       url:'http://ilovealcazar.es',
@@ -44,6 +48,7 @@ export class MenuPage {
     });
 
     let catTemporales:any[];
+   
     //Cogeremos las categorías para que sean mostradas en nuestro menú
     this.Woocommerce.getAsync('products/categories').then((data)=>{
       catTemporales=JSON.parse(data.body).product_categories;
@@ -51,12 +56,15 @@ export class MenuPage {
       for(var i=0;i<catTemporales.length;i++){
         if(catTemporales[i].parent===0){
           this.categories.push(catTemporales[i]);
+          //Cogemos los iconos que estarán guardados en la descripción de las categorías
+          this.iconos.push(catTemporales[i].description);
         }
       }
       console.log("Cogidas " + this.categories.length + " categorías padre");
+      console.log(this.categories);
      }).catch((error)=> console.log("Error cogiendo categorías " + error.message));
-  
-  }
+   
+    }
   
 
   openCatPage(category){

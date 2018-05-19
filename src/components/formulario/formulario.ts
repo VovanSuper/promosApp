@@ -4,38 +4,36 @@ import { NavController, AlertController, Platform } from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ImageProvider } from '../../providers/image/image';
 import { EmailProvider } from '../../providers/email/email';
+import { DatabaseProvider } from '../../providers/database/database';
+import { PreloaderProvider } from '../../providers/preloader/preloader';
+import { ObjetoInformacion } from '../../models/objetoInfo/objetoInfo.interface';
 
 
-
-/**
- * Generated class for the FormularioComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'formulario-component',
   templateUrl: 'formulario.html'
 })
 export class FormularioComponent {
 
-  
 
   public Emailform: FormGroup;
-  private attachment1: any = null;
-  private attachment2: any = null;
-  private attachment3: any = null;
   attachmentArray: any[];
+  private attachment1: any;
+  private attachment2: any
+  private attachment3: any
+  private objetoInfo: ObjetoInformacion;
+  private nombreNegocio: string;
 
   constructor(private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private ImageService: ImageProvider,
-    private EmailService: EmailProvider,
+    private _DB: DatabaseProvider,
     private AlertService: AlertController,
-    private platform:Platform) {
+    private platform: Platform,
+    private _PL: PreloaderProvider,
+    private alertCtrl:AlertController) {
 
     this.attachmentArray = [this.attachment1, this.attachment2, this.attachment3];
-
 
     this.Emailform = this.formBuilder.group({
       "email": ["", Validators.required],
@@ -56,14 +54,45 @@ export class FormularioComponent {
     alert.present();
   }
 
-ionViewWillLoad(){
-  this.attachmentArray=[];
-}
+  ionViewWillLoad() {
+    this.attachmentArray = [];
+  }
 
+  sendImages(){
+    console.log ("Enviando imágenes!!!!!!! ");    
+    //Subimos las imágenes al storage
+    let contador=0;
+    for (var i = 0; i < this.attachmentArray.length; i++) {
+      contador++;
+      if (this.attachmentArray[i] || this.attachmentArray[i] != null)
+        this._DB.uploadImage(this.objetoInfo.empresa + "_" + contador, this.attachmentArray[i]);
+    }
+
+    this.objetoInfo=null;
+  }
+
+  createObject() {
+    this.objetoInfo = {
+      descripcion_corta: this.Emailform.get('descripcion_corta').value,
+      descripcion_larga: this.Emailform.get('descripcion_larga').value,
+      direccion: this.Emailform.get('direccion').value,
+      email: this.Emailform.get('email').value,
+      empresa: this.Emailform.get('empresa').value,
+      telefono: this.Emailform.get('telefono').value,
+
+    }
+    
+
+
+
+
+  }
+
+  //Coge las imágenes en formato base64
   retrieveAttachment(): void {
-    this.platform.ready().then(()=>{
+    this.platform.ready().then(() => {
       var haySitio = false;
-      this.ImageService.selectPhotograph()
+      this.ImageService.selectImage()
         .then((attachment: any) => {
           // Assign retrieved image to private property
           // which we'll subsequently access within the
@@ -71,81 +100,81 @@ ionViewWillLoad(){
           for (var i = 0; i < this.attachmentArray.length; i++) {
             if (!this.attachmentArray[i] || !this.attachmentArray[i] == null) {
               haySitio = true;
-             /* for(var e=0;e<attachment.length;e++){
-                this.attachmentArray[i]+=attachment[e];
-                if(attachment[e] ==="?"){
-                  this.attachmentArray=this.attachmentArray[i].replace(/\?/g,'');
-                  this.attachmentArray[i].trim();
-                  break;
-                }
 
-              }
-
-              */
               this.attachmentArray[i] = attachment;
               console.log("Esto tiene la imagen ") + attachment;
               break;
             }
           }
-  
+
           if (!haySitio) {
             this.displayMessage('Información', 'Sólo puede adjutar 3 imágenes');
-            for(let attach of this.attachmentArray){
+            for (let attach of this.attachmentArray) {
               console.log(attach);
             }
           }
-  
-  
+
+
         });
     });
-  
+
   }
 
   volver() {
     this.navCtrl.pop();
   }
 
-  sendMessage(): void {
-    // Retrieve the validated form fields
-    let to: string = 'comercial@ilovealcazar.com',
-      cc: string = 'davidapuntes@hotmail.com',
-      subject: string = 'Nueva Promoción',
-      message: string = " Email origen: " + this.Emailform.controls["email"].value + "/n" +
-      + " Negocio: " + this.Emailform.controls["empresa"].value  + "/n" +
-      + " Teléfono: " + this.Emailform.controls["telefono"].value + "/n" +
-      + " Dirección: " + this.Emailform.controls["direccion"].value + "/n" +
-      + " Descripcion corta: " + this.Emailform.controls["descripcion_corta"].value + "/n" +
-      + " Dirección: " + this.Emailform.controls["descripcion_larga"].value + "/n" 
+
+  //Enviamos toda la información
+
+  sendInfo() {
+
+    //mostramos loader
+    this._PL.displayPreloader();
+
+    //Creamos objeto con la info del formulario
+    this.createObject();
 
 
-    // Has the user selected an attachment?
-    if (this.attachmentArray.length == 1) {
-      // If so call the sendEmail method of the EmailProvider service, pass in
-      // the retrieved form data and watch the magic happen! :)
-      this.EmailService.sendEmail(to, cc, subject, message, this.attachment1);
-      this.attachmentArray=[];
-    }
-
-    else if (this.attachmentArray.length == 2) {
-
-      this.EmailService.sendEmail(to, cc, subject, message, this.attachment1, this.attachment2);
-      this.attachmentArray=[];
-    }
-    else if (this.attachmentArray.length == 3) {
-
-      this.EmailService.sendEmail(to, cc, subject, message, this.attachment1, this.attachment2, this.attachment3);
-      this.attachmentArray=[];
-    }
+    //Subimos ese objeto a firebase database
+    this._DB.addToDatabase(this.objetoInfo)
+      .then((data) => {
+        this._PL.hidePreloader();
+        this.sendImages();
+        this.promptAlert();
+      
+      }, (error) => {
+        this._PL.hidePreloader();
+        this.displayMessage('Error', 'Se ha producido un fallo. Por favor, inténtelo de nuevo por favor');
+        console.error(error);
+      });
 
 
-
-    else {
-      // Inform the user that they need to add an attachment
-      this.displayMessage('Error', 'Adjunte al menos una fotografía para la promoción');
-    }
   }
 
 
+
+  promptAlert()
+{
+    let alert = this.alertCtrl.create({
+        title: 'Hemos recibido sus datos correctamente. En breve podrá ver su oferta publicada en la aplicación y en la web.',
+        buttons: [
+            {
+                text: 'OK',
+                handler: () => {
+                    alert.dismiss();
+                    //this.sendImages();
+                    this.navCtrl.setRoot('MenuPage');
+                    return false;
+                }
+            }
+        ]
+    });
+
+    alert.present();
+
+    
+}
 }
 
 

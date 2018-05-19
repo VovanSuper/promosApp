@@ -14,6 +14,14 @@ import {EmailComposer} from'@ionic-native/email-composer';
 import { EmailProvider } from '../providers/email/email';
 import { ImageProvider } from '../providers/image/image';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { DatabaseProvider } from '../providers/database/database';
+import { PreloaderProvider } from '../providers/preloader/preloader';
+import { HttpModule } from '@angular/http';
+import { DatePipe } from '@angular/common'
+import { ShareProvider } from '../providers/share/share';
+import { GoogleMaps } from '@ionic-native/google-maps';
+
+
 
 
 
@@ -41,6 +49,7 @@ const config = {
     IonicModule.forRoot(MyApp),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    HttpModule
     
   ],
   bootstrap: [IonicApp],
@@ -60,7 +69,12 @@ const config = {
     EmailComposer,
     EmailProvider,
     ImageProvider,
-    SocialSharing
+    SocialSharing,
+    DatabaseProvider,
+    PreloaderProvider,
+    DatePipe,
+    ShareProvider,
+    GoogleMaps
     
   ]
 })

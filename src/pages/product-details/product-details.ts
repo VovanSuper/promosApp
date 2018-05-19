@@ -20,6 +20,8 @@ export class ProductDetailsPage {
   product: any;
   Woocommerce: any;
   reviews: any[]=[];
+  longitud:any;
+  latitud:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.product = this.navParams.get('product');
@@ -31,12 +33,18 @@ export class ProductDetailsPage {
       consumerSecret: 'cs_c111d10d2af21c1394df780d4c8b79e4e8607996'
     });
 
-    //Vamos a coger las reviews u opiniones que tenga cada producto
+    /*Vamos a coger las reviews u opiniones que tenga cada producto
     this.Woocommerce.getAsync('products/' + this.product.id + '/reviews').then((data) => {
       this.reviews = (JSON.parse(data.body).product_reviews);
       console.log(this.reviews);
     }).catch((error) => console.log("Error cogiendo reviews " + error.message));
+*/
 
+    //Vamos a coger la dirección
+    this.longitud=this.product.attributes.longitud.options[0];
+    this.latitud=this.product.attributes.latitud.options[0];
+
+    console.log("Coordenadas " + this.longitud + " " + this.latitud);
 
   }
 
