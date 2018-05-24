@@ -15,6 +15,8 @@ export class HomePage {
   Woocommerce: any;
   moreProductos: any[];
   page: number;
+  val: any = "";
+
 
   /*Vamos a acceder a un componente del html (productSlides)..Lo hacemos a través del ViewChild,
   que nos permite acceder a "hijos" de nuestra página .ts...Hijos serían por ejemplo los elementos del html
@@ -40,6 +42,12 @@ export class HomePage {
       consumerSecret: 'cs_c111d10d2af21c1394df780d4c8b79e4e8607996'
     });
 
+
+    this.initializeItems();
+
+  }
+
+  initializeItems() {
     //Coger productos para mostrarlos en el slider
     //El primer parámetro indica lo que estamos importando (productos)
     //Installar en google chrome la extensión allow-control allow-origin para que no de problema al solicitar desde localhost
@@ -50,8 +58,6 @@ export class HomePage {
       //Cada carga coge 10 productos, 1 página
       this.moreProductos = JSON.parse(data.body).products;
     }).catch((error) => console.log("Error cogiendo productos " + error.message));
-
-   
   }
 
   /*
@@ -72,28 +78,49 @@ export class HomePage {
 
   loadMoreProducts(event) {
     this.page++;
-    console.log("Evento no nulo");
+    let arrayAux: any[] = [];
+
     this.Woocommerce.getAsync('products?page=' + this.page).then((data) => {
       let prodAux = JSON.parse(data.body).products;
       for (var i = 0; i < prodAux.length; i++) {
         console.log(prodAux[i]);
-        this.moreProductos.push(prodAux[i]);
+        arrayAux.push(prodAux[i]);
       }
-
-      console.log("Productos segunda página cogidos... + " + this.moreProductos.length);
-      //Tenemos que indicar a Angular que ya debemos terminar la tarea asociada al evento recibido
-
       event.complete();
 
 
       //Si cogemos de una tirada, menos de 10 productos, significará que hemos llegado al final
-
-      if (prodAux < 10) {
+      if (prodAux.length < 10) {
         console.log("Ya no hay más productos")
         event.enable(false); //Disable infinite scroll
       }
 
+
+      // console.log("Productos página " + this.page + " cogidos...  " + this.moreProductos.length);
+      //Tenemos que indicar a Angular que ya debemos terminar la tarea asociada al evento recibido
+
+
+      if (!(this.val) || (this.val.trim() == '')) {
+        console.log("pasa por filtro complicado");
+        for (let o of arrayAux) {
+          this.moreProductos.push(o);
+        }
+        //this.moreProductos = arrayAux.slice();
+      }
+
+      else {
+        let auxMore = arrayAux.filter((item) => {
+          return (item.title.toLowerCase().indexOf(this.val.toLowerCase()) > -1);
+        });
+        for (let au of auxMore) {
+          this.moreProductos.push(au);
+
+
+        }
+
+      }
     }).catch((error) => console.log("Error cogiendo productos " + error.message));
+
   }
 
 
@@ -101,11 +128,34 @@ export class HomePage {
     this.navCtrl.push('ProductDetailsPage', { 'product': product });
   }
 
-  share() {
-
-  }
 
   uploadPromotion() {
     this.navCtrl.push('FormularioPage');
+  }
+
+  getItems(ev: any) {
+    // Reset items back to all of the items
+    //this.initializeItems();
+
+    // set val to the value of the searchbar
+    this.val = ev.target.value;
+    console.log("this val ---> " + this.val);
+
+    // if the value is an empty string don't filter the items
+    if (this.val && this.val.trim() != '') {
+      let productosFiltrados:any[]=[];
+      for(let prod of this.moreProductos){
+        if(prod.title.includes(this.val) || prod.short_description.includes(this.val)){
+          productosFiltrados.push(prod);
+        }
+      }
+      this.moreProductos = productosFiltrados.slice();
+    }
+
+    else{
+      this.moreProductos=[];
+      this.page = 1;
+      this.initializeItems();
+    }
   }
 }
