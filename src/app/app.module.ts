@@ -20,7 +20,7 @@ import { HttpModule } from '@angular/http';
 import { DatePipe } from '@angular/common'
 import { ShareProvider } from '../providers/share/share';
 import { GoogleMaps } from '@ionic-native/google-maps';
-
+import { Network } from '@ionic-native/network';
 
 
 
@@ -74,7 +74,8 @@ const config = {
     PreloaderProvider,
     DatePipe,
     ShareProvider,
-    GoogleMaps
+    GoogleMaps,
+    Network
     
   ]
 })

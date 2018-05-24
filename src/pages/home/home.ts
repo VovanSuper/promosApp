@@ -51,7 +51,7 @@ export class HomePage {
       this.moreProductos = JSON.parse(data.body).products;
     }).catch((error) => console.log("Error cogiendo productos " + error.message));
 
-    // this.loadMoreProducts(null); //Para que se rellene el array de more products
+   
   }
 
   /*

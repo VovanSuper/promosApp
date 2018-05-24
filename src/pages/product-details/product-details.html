@@ -31,26 +31,10 @@
       <ion-chip *ngFor="let cat of product.categories" style="margin-left: 5px;">
         <ion-label color="danger" [innerHTML]="cat"></ion-label>
       </ion-chip>
-
       <p [innerHTML]="product.description"></p>
-
-      <ion-card *ngIf="product.attributes.length > 0">
-        <ion-card-content>
-          <ion-card-title>
-            Especificaciones
-          </ion-card-title>
-          <ion-grid>
-            <ion-row *ngFor="let atributo of product.attributes">
-              <!-- Consider 1 row 12 columns width -->
-              <ion-col col-4 [innerHTML]="atributo.name"></ion-col>
-              <ion-col col-8 *ngFor="let option of atributo.options" [innerHTML]="option"></ion-col>
-              <!-- For each attribute name we can have multiple values (options) -->
-            </ion-row>
-          </ion-grid>
-        </ion-card-content>
-      </ion-card>
     </ion-card-content>
   </ion-card>
+  <div *ngIf="atributos.length > 0" #map id="map"></div>
 
 
 

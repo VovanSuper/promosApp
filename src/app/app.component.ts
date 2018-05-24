@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import firebase from 'firebase';
+import { Network } from '@ionic-native/network';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class MyApp {
 
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private auth: AuthProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private auth: AuthProvider,
+    private network:Network,private alertCtrl:AlertController) {
     this.initializeApp();
 
 
@@ -24,6 +26,7 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
+      if(this.network.type != 'none'){
       const unsubscribe = firebase.auth().onAuthStateChanged(user => {
         if (!user) {
           this.rootPage = 'LoginPage';
@@ -37,7 +40,28 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    }
+    else{
+      this.presentConfirm();
+    }
     });
+  
+  }
+
+  presentConfirm() {
+    let alert = this.alertCtrl.create({
+      title: 'Información',
+      message: 'Ha de tener conexión wifi o datos para usar la aplicación',
+      buttons: [
+             {
+          text: 'OK',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

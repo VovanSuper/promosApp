@@ -23,6 +23,7 @@ export class FormularioComponent {
   private attachment3: any
   private objetoInfo: ObjetoInformacion;
   private nombreNegocio: string;
+  private contadorImagenesMinimas: number = 0;
 
   constructor(private formBuilder: FormBuilder,
     private navCtrl: NavController,
@@ -31,7 +32,7 @@ export class FormularioComponent {
     private AlertService: AlertController,
     private platform: Platform,
     private _PL: PreloaderProvider,
-    private alertCtrl:AlertController) {
+    private alertCtrl: AlertController) {
 
     this.attachmentArray = [this.attachment1, this.attachment2, this.attachment3];
 
@@ -58,17 +59,17 @@ export class FormularioComponent {
     this.attachmentArray = [];
   }
 
-  sendImages(){
-    console.log ("Enviando imágenes!!!!!!! ");    
+  sendImages() {
+    console.log("Enviando imágenes!!!!!!! ");
     //Subimos las imágenes al storage
-    let contador=0;
+    let contador = 0;
     for (var i = 0; i < this.attachmentArray.length; i++) {
       contador++;
       if (this.attachmentArray[i] || this.attachmentArray[i] != null)
         this._DB.uploadImage(this.objetoInfo.empresa + "_" + contador, this.attachmentArray[i]);
     }
 
-    this.objetoInfo=null;
+    this.objetoInfo = null;
   }
 
   createObject() {
@@ -81,7 +82,7 @@ export class FormularioComponent {
       telefono: this.Emailform.get('telefono').value,
 
     }
-    
+
 
 
 
@@ -100,7 +101,7 @@ export class FormularioComponent {
           for (var i = 0; i < this.attachmentArray.length; i++) {
             if (!this.attachmentArray[i] || !this.attachmentArray[i] == null) {
               haySitio = true;
-
+              this.contadorImagenesMinimas++;
               this.attachmentArray[i] = attachment;
               console.log("Esto tiene la imagen ") + attachment;
               break;
@@ -129,52 +130,66 @@ export class FormularioComponent {
 
   sendInfo() {
 
-    //mostramos loader
-    this._PL.displayPreloader();
+    if (this.contadorImagenesMinimas == 0) {
+      this.presentAlert();
+    }
 
-    //Creamos objeto con la info del formulario
-    this.createObject();
+    else {
 
+      //mostramos loader
+      this._PL.displayPreloader();
 
-    //Subimos ese objeto a firebase database
-    this._DB.addToDatabase(this.objetoInfo)
-      .then((data) => {
-        this._PL.hidePreloader();
-        this.sendImages();
-        this.promptAlert();
-      
-      }, (error) => {
-        this._PL.hidePreloader();
-        this.displayMessage('Error', 'Se ha producido un fallo. Por favor, inténtelo de nuevo por favor');
-        console.error(error);
-      });
+      //Creamos objeto con la info del formulario
+      this.createObject();
 
 
+      //Subimos ese objeto a firebase database
+      this._DB.addToDatabase(this.objetoInfo)
+        .then((data) => {
+          this._PL.hidePreloader();
+          this.sendImages();
+          this.promptAlert();
+
+        }, (error) => {
+          this._PL.hidePreloader();
+          this.displayMessage('Error', 'Se ha producido un fallo. Por favor, inténtelo de nuevo por favor');
+          console.error(error);
+        });
+    }
+
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Información:',
+      subTitle: 'Debe adjuntar al menos 1 fotografía para enviar su oferta',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 
 
-  promptAlert()
-{
+  promptAlert() {
     let alert = this.alertCtrl.create({
-        title: 'Hemos recibido sus datos correctamente. En breve podrá ver su oferta publicada en la aplicación y en la web.',
-        buttons: [
-            {
-                text: 'OK',
-                handler: () => {
-                    alert.dismiss();
-                    //this.sendImages();
-                    this.navCtrl.setRoot('MenuPage');
-                    return false;
-                }
-            }
-        ]
+      title: 'Hemos recibido sus datos correctamente. En breve podrá ver su oferta publicada en la aplicación y en la web.',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            alert.dismiss();
+            //this.sendImages();
+            this.navCtrl.setRoot('MenuPage');
+            return false;
+          }
+        }
+      ]
     });
 
     alert.present();
 
-    
-}
+
+  }
 }
 
 

@@ -7,7 +7,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title [innerHTML]="category.slug"></ion-title>
+    <ion-title [innerHTML]="category.slug | titlecase"></ion-title>
   </ion-navbar>
 
 </ion-header>
