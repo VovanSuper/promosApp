@@ -8,5 +8,13 @@ ion-app._gmaps_cdv_ .nav-decor{
           width:100%;
           min-height: 60%;
       }
+
+      ion-slide.swiper-slide {
+        align-items: flex-start;
+    }
+
+    ion-slides{
+        height:200px;
+    }
    
   }

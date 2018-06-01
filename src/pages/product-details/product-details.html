@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ProductDetailsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -15,25 +9,20 @@
 
 <ion-content padding>
   <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
+  <ion-slides autoplay="3000">
+    <!--En el slider, tendremos un slide por cada imagen que haya en el array de imágenes del producto -->
+    <ion-slide *ngFor="let image of product.images">
+      <img [src]="image.src" /> </ion-slide>
+  </ion-slides>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-slides autoplay="3000">
-        <!--En el slider, tendremos un slide por cada imagen que haya en el array de imágenes del producto -->
-        <ion-slide *ngFor="let image of product.images">
-          <img [src]="image.src" /> </ion-slide>
-      </ion-slides>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title [innerHTML]="product.title"> </ion-card-title>
+
+  <h1 [innerHTML]="product.title" text-center> </h1>
+  <!--
       <ion-chip *ngFor="let cat of product.categories" style="margin-left: 5px;">
         <ion-label color="danger" [innerHTML]="cat"></ion-label>
-      </ion-chip>
-      <p [innerHTML]="product.description"></p>
-    </ion-card-content>
-  </ion-card>
+      </ion-chip>-->
+  <p [innerHTML]="product.description" text-center text-wrap></p>
+
   <div *ngIf="atributos.length > 0" #map id="map"></div>
 
 

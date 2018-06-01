@@ -23,7 +23,7 @@ export class PreloaderProvider {
    displayPreloader() : void
    {
       this.loading = this.loadingCtrl.create({
-         content: 'Please wait...'
+         content: 'Por favor espere...'
       });
 
       this.loading.present();

@@ -8,12 +8,6 @@ import { FormularioPage } from '../../pages/formulario/formulario';
 
 
 
-/**
- * Generated class for the LoginFormComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'login-form',
   templateUrl: 'login.component.html'
@@ -47,43 +41,25 @@ export class LoginComponent {
 
   }
 
-  async loginWithFacebook() {
-    try {
-      const resultado = await this.auth.facebookLogin();
-      this.navCtrl.setRoot('MenuPage');
-    }
+  loginWithFacebook() {
 
-    catch (e) {
-      this.toast.create({
-        /* Ver uso de template literal strings  */
-        message: 'Error de autenticación. Compruebe que su dispositivo dispone de la app de Facebook activa con su usuario',
-        duration: 3000
-      }).present();
-    }
+    this.auth.facebookLogin().then((response) => {
+      if (response.errorCode) {
+        console.log("Error autenticando con facebook " + response.error.json());
+      }
+      else {
+        this.navCtrl.setRoot('MenuPage');
+      }
+    });
   }
-
 
   loginWithGoogle() {
-
-    if (this.auth.googleLogin()) {
-      this.navCtrl.setRoot('MenuPage');
-    } else {
-      this.toast.create({
-        /* Ver uso de template literal strings  */
-        message: 'Error de autenticación. Compruebe que sus datos y conexión.',
-        duration: 3000
-      }).present();
-    }
+    this.auth.loginWithGoogle();
   }
-
-
-
-
 
   NavigateToPageRegister(page: string) {
     this.navCtrl.push('RegisterPage');
   }
-
 
   resetPassword(email: string): Promise<void> {
     if (!email || email == "") {
@@ -124,19 +100,18 @@ export class LoginComponent {
     }
   }
 
-  uploadPromotion(){
+  uploadPromotion() {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
-        this.presentAlert('Información','Por favor inicie sesión para continuar');
+        this.presentAlert('Información', 'Por favor inicie sesión para continuar');
         unsubscribe();
       } else {
         this.navCtrl.push(FormularioPage);
       }
-  });
-}
+    });
+  }
 
-
-  presentAlert(titulo:string,contenido:string) {
+  presentAlert(titulo: string, contenido: string) {
     let alert = this.alertCtrl.create({
       title: titulo,
       subTitle: contenido,

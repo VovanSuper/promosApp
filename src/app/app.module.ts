@@ -8,7 +8,6 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthProvider } from '../providers/auth/auth';
 import { Facebook } from '@ionic-native/facebook';
-import { GooglePlus } from '@ionic-native/google-plus';
 import { Camera } from '@ionic-native/camera';
 import {EmailComposer} from'@ionic-native/email-composer';
 import { EmailProvider } from '../providers/email/email';
@@ -21,8 +20,8 @@ import { DatePipe } from '@angular/common'
 import { ShareProvider } from '../providers/share/share';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Network } from '@ionic-native/network';
-
-
+import {BrowserTab } from '@ionic-native/browser-tab'
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 
@@ -35,6 +34,7 @@ const config = {
   projectId: "promosapp-f65a4",
   storageBucket: "promosapp-f65a4.appspot.com",
   messagingSenderId: "302191716332"
+
 };
 
 
@@ -64,7 +64,6 @@ const config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     Facebook,
-    GooglePlus,
     Camera,
     EmailComposer,
     EmailProvider,
@@ -75,7 +74,9 @@ const config = {
     DatePipe,
     ShareProvider,
     GoogleMaps,
-    Network
+    Network,
+    BrowserTab,
+    InAppBrowser
     
   ]
 })

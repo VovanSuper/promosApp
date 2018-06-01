@@ -1,0 +1,66 @@
+{
+  "project_info": {
+    "project_number": "302191716332",
+    "firebase_url": "https://promosapp-f65a4.firebaseio.com",
+    "project_id": "promosapp-f65a4",
+    "storage_bucket": "promosapp-f65a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302191716332:android:78894dca8b5c2736",
+        "android_client_info": {
+          "package_name": "com.promos.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302191716332-3n8fhtevns562qjnkpird616qbk6op7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.promos.app",
+            "certificate_hash": "e11002229465dc82631dc6c9ca85ff2a48b0856f"
+          }
+        },
+        {
+          "client_id": "302191716332-78lvm0f3t1iq0t6stkfvg2g4th0i6dgc.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "302191716332-78lvm0f3t1iq0t6stkfvg2g4th0i6dgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHpnxv3jLg2KZrzfpB-c8cB7_waiNmrLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302191716332-78lvm0f3t1iq0t6stkfvg2g4th0i6dgc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "302191716332-l92gak1mprnjarp8rkmjanknmshggkjc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.promos.app"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

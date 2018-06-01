@@ -1,22 +1,47 @@
-<ion-card>
-  <ion-card-content>
-    <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>
-      <ion-item>
-          <ion-label floating>Email address</ion-label>
-          <ion-input type="email" [(ngModel)]="account.email">   </ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="account.password">   </ion-input>
-      </ion-item>
-  </ion-card-content>
-  <ion-row class="loginForm">
-    <div>
-     <button ion-button (click)="NavigateToPageRegister()" color="secondary">Register</button>
-     <button ion-button (click)="login()" >Log in</button>
-     <button ion-button (click)="loginWithFacebook()"> Login with Facebook </button>
-     <button ion-button (click)="loginWithGoogle()"> Login with Google+ </button>
-     <button ion-button (click)="resetPassword(account.email)"> Forgot password?? </button>
-    </div>
-  </ion-row>
-</ion-card>
+<ion-content>
+  <img src="assets/imgs/logo.png" alt="Logo" class="logo" />
+  <!-- <button ion-button block (click)="uploadPromotion()" color="secondary">Subir Promoción</button>-->
+  <ion-item>
+    <ion-label floating>Email address</ion-label>
+    <ion-input type="email" [(ngModel)]="account.email"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="account.password"> </ion-input>
+  </ion-item>
+
+
+  <div>
+    <ion-row align-items-center class="fila">
+      <ion-col col-2></ion-col>
+      <ion-col col-4>
+        <button ion-button (click)="NavigateToPageRegister()" color="secondary">Registrarse</button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button (click)="login()">Entrar</button>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-row align-items-center class="fila">
+      <ion-col col-2></ion-col>
+      <ion-col col-4>
+        <button ion-button (click)="loginWithFacebook()"><ion-icon name="logo-facebook"></ion-icon>Facebook</button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button (click)="loginWithGoogle()"> <ion-icon name="logo-googleplus"></ion-icon>Google+</button>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-2></ion-col>
+      <ion-col col-8>
+        <button ion-button (click)="resetPassword(account.email)" style="text-align: center"> ¿Olvidaste la contraseña? </button>
+      </ion-col>
+      <ion-col col-2></ion-col>
+
+
+    </ion-row>
+
+  </div>
+
+</ion-content>
