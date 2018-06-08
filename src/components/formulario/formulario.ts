@@ -7,6 +7,7 @@ import { EmailProvider } from '../../providers/email/email';
 import { DatabaseProvider } from '../../providers/database/database';
 import { PreloaderProvider } from '../../providers/preloader/preloader';
 import { ObjetoInformacion } from '../../models/objetoInfo/objetoInfo.interface';
+import { attachEmbeddedView } from '@angular/core/src/view';
 
 
 @Component({
@@ -166,6 +167,16 @@ export class FormularioComponent {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  eliminaImagen(index){
+    for(var i=0;i<this.attachmentArray.length;i++){
+      if(i==index){
+        this.attachmentArray[i]=null;
+      }
+    }
+    
+
   }
 
 

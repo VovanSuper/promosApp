@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { NavController, ToastController, Alert, AlertController } from 'ionic-angular';
 import { LoginResponse } from '../../models/login/loginResponse.interface';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -15,6 +15,9 @@ import { FormularioPage } from '../../pages/formulario/formulario';
 export class LoginComponent {
 
   account = {} as Account;
+ 
+  
+
 
   /* Lo contrario que el input...Ahora el componente Login pasará información al padre...(En vez de recibir
   como con el imput...pasará un EventEmitter con la respuesta (result para satisfactoria y error para negativa)) */
@@ -25,7 +28,10 @@ export class LoginComponent {
     private alertCtrl: AlertController) {
     //Hay que instanciarlo, ya que al tener el decorator output no lo hemos podido poner en el constructor
     this.loginStatus = new EventEmitter<LoginResponse>();
+
   }
+
+
 
   async login() {
     try {
@@ -44,11 +50,19 @@ export class LoginComponent {
   loginWithFacebook() {
 
     this.auth.facebookLogin().then((response) => {
-      if (response.errorCode) {
-        console.log("Error autenticando con facebook " + response.error.json());
-      }
-      else {
+
+      if (!response) {
         this.navCtrl.setRoot('MenuPage');
+      }
+
+      else {
+        if (response.errorCode) {
+          console.log("Error autenticando con facebook " + response.error.json());
+        }
+
+        else {
+          this.navCtrl.setRoot('MenuPage');
+        }
       }
     });
   }

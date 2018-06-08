@@ -4,12 +4,6 @@ import { RegisterComponent } from '../../components/register/register.component'
 import { LoginResponse } from '../../models/login/loginResponse.interface';
 
 
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -20,7 +14,8 @@ export class RegisterPage {
 
   private mensajeEspanol:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private toast:ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private toast:ToastController,
+  ) {
   }
 
   ionViewDidLoad() {
@@ -33,7 +28,9 @@ export class RegisterPage {
         /* Ver uso de template literal strings  */
         message : `Registro correcto ${event.result.email}`,
         duration : 3000
-      }).present();
+      }).present().then(()=>{
+        this.navCtrl.setRoot('LoginPage');
+      })
    
   }
 
@@ -58,7 +55,7 @@ export class RegisterPage {
         } 
 
         default: { 
-          this.mensajeEspanol='Problema con su registro. Asegúrese de que sus datos y su conexión son correctos.';  
+          this.mensajeEspanol='Problema con su registro. Asegúrese de que sus datos y conexión son correctos.';  
            break; 
         } 
      }

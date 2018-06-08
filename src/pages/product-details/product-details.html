@@ -22,6 +22,7 @@
         <ion-label color="danger" [innerHTML]="cat"></ion-label>
       </ion-chip>-->
   <p [innerHTML]="product.description" text-center text-wrap></p>
+  <button ion-button block (click)="obtenerCodigo()"> Obtener Código de la Promoción </button>
 
   <div *ngIf="atributos.length > 0" #map id="map"></div>
 

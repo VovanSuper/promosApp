@@ -47,28 +47,28 @@ export class ShareProvider {
 
 
 
-  twitterShare(msg, image) {
+  twitterShare(msg, image,link) {
     this.socialSharing.canShareVia('twitter', null, null, null, null).then((success) => {
-      this.socialSharing.shareViaTwitter(msg + "\n Enviado desde ILoveAlcazar App!", image, 'http://ilovealcazar.es/');
+      this.socialSharing.shareViaTwitter(msg + "\n Enviado desde ILoveAlcazar App!", image, link);
     }, (error) => {
       this.presentAlert('Información', 'Debe tener la app de Twitter instalada en su terminal', 'twitter');
     });
 
   }
 
-  whatsappShare(msg, image) {
+  whatsappShare(msg, image,link) {
     this.socialSharing.canShareVia('whatsapp', null, null, null, null).then((success) => {
 
-      this.socialSharing.shareViaWhatsApp(msg + "\n Enviado desde ILoveAlcazar App !", image, 'http://ilovealcazar.es/');
+      this.socialSharing.shareViaWhatsApp(msg + "\n Enviado desde ILoveAlcazar App !", image,link);
     }, (error) => {
       this.presentAlert('Información', 'Debe tener la app de Whatsapp instalada en su terminal', 'whatsapp');
     });
   }
 
 
-  facebookShare(msg, image) {
+  facebookShare(msg, image,link) {
     this.socialSharing.canShareVia('facebook', null, null, null, null).then((success) => {
-      this.socialSharing.shareViaFacebook(msg + "\n Enviado desde ILoveAlcazar App!", image, 'http://ilovealcazar.es/');
+      this.socialSharing.shareViaFacebook(msg + "\n Enviado desde ILoveAlcazar App!", image, link);
     }, (error) => {
       this.presentAlert('Información', 'Debe tener la app de Facebook instalada en su terminal', 'facebook');
     });

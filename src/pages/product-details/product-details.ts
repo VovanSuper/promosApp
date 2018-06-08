@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, IonicPage, Platform } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, Platform, ModalController } from 'ionic-angular';
 import * as WC from 'woocommerce-api'; //Importamos librería completa
 import {
   GoogleMaps,
@@ -29,7 +29,7 @@ export class ProductDetailsPage {
   atributos: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform,
-    private googleMaps: GoogleMaps
+    private googleMaps: GoogleMaps,public modalCtrl: ModalController
   ) {
     this.platform.ready().then(() => {
       this.product = this.navParams.get('product');
@@ -114,7 +114,12 @@ export class ProductDetailsPage {
     this.navCtrl.push('FormularioPage');
   }
 
+  obtenerCodigo(){
+    console.log("click!");
+     let modal = this.modalCtrl.create('CuponPage', { titulo: this.product.title,establecimiento:this.product.short_description  });
+     modal.present();
+    }
+  }
 
 
 
-}

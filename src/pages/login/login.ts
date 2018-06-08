@@ -19,6 +19,7 @@ export class LoginPage {
   private mensajeEspanol: string;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private toast: ToastController) {
+
   }
 
   login(event: LoginResponse) {

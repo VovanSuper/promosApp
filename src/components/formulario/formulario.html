@@ -41,9 +41,11 @@
         Enviar</button>
     </ion-col>
   </ion-row>
+
   <ion-row id="imagesRow">
-    <div *ngFor="let image of attachmentArray">
-    <img *ngIf= "image && image != null" [src]="image"/>
+    <div *ngFor="let image of attachmentArray;let i=index" class="imagenes">
+    <img *ngIf= "image && image != null" [src]="image" class="imagen">
+    <ion-icon name="close" *ngIf= "image && image != null" (click)="eliminaImagen(i)"></ion-icon>
   </div>
   </ion-row>
 

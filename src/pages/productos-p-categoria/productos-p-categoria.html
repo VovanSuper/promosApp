@@ -24,17 +24,17 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <button ion-button icon-only (click)="shareProv.twitterShare(product.title,product.featured_src)" color="twitter" clear>
+          <button ion-button icon-only (click)="shareProv.twitterShare(product.title,product.featured_src,product.permalink)" color="twitter" clear>
             <ion-icon class="share-icon" name="logo-twitter"></ion-icon>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-only (click)="shareProv.whatsappShare(product.title,product.featured_src)" color="whatsapp" clear>
+          <button ion-button icon-only (click)="shareProv.whatsappShare(product.title,product.featured_src,product.permalink)" color="whatsapp" clear>
             <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-only (click)="shareProv.facebookShare(product.title,product.featured_src)" color="facebook" clear>
+          <button ion-button icon-only (click)="shareProv.facebookShare(product.title,product.featured_src,product.permalink)" color="facebook" clear>
             <ion-icon class="share-icon" name="logo-facebook"></ion-icon>
           </button>
         </ion-col>
