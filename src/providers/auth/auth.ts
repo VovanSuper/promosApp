@@ -6,6 +6,7 @@ import { Facebook } from '@ionic-native/facebook'
 import { Observable } from 'rxjs/Observable';
 import { Platform, App } from 'ionic-angular';
 import * as firebase from 'firebase/app';
+import { PreloaderProvider } from '../preloader/preloader';
 
 
 @Injectable()
@@ -19,6 +20,7 @@ export class AuthProvider {
     private facebook: Facebook,
     private platform: Platform,
     private app: App,
+    private loading:PreloaderProvider
     ) {
 
     firebase.auth().useDeviceLanguage();
@@ -96,6 +98,8 @@ export class AuthProvider {
 
   loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    this.loading.displayPreloader();
+
 
     firebase.auth().signInWithRedirect(provider).then(() => {
       firebase.auth().getRedirectResult().then(result => {
@@ -104,9 +108,11 @@ export class AuthProvider {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
+
         this.app.getActiveNav().setRoot('MenuPage');
         console.log(token, user);
       }).catch(function (error) {
+        this.loading.hidePreloader();
         // Handle Errors here.
         console.log(error.message);
       });

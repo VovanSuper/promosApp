@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { LoginResponse } from '../../models/login/loginResponse.interface';
+import { PreloaderProvider } from '../../providers/preloader/preloader';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 /**
  * Generated class for the LoginPage page.
@@ -18,9 +20,17 @@ export class LoginPage {
 
   private mensajeEspanol: string;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toast: ToastController) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toast: ToastController,
+  private loading:PreloaderProvider,private splash:SplashScreen) {
 
   }
+
+  ionViewWillLoad(){
+    this.splash.hide();
+  }
+ 
+
+
 
   login(event: LoginResponse) {
     //Si no hay error en el evento recibido, que sea la página login la que me lleve a la profile
@@ -58,6 +68,7 @@ export class LoginPage {
           break;
         }
       }
+      this.loading.hidePreloader();
       this.toast.create({
         /* Ver uso de template literal strings  */
         message: `Error : ${this.mensajeEspanol}`,

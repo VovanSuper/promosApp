@@ -4,6 +4,7 @@ import * as WC from 'woocommerce-api'; //Importamos librería completa
 import 'rxjs/add/operator/map';
 import { FormularioPage } from '../formulario/formulario';
 import { TitleCasePipe } from '@angular/common';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 /**
  * Generated class for the MenuPage page.
@@ -29,7 +30,7 @@ export class MenuPage {
 
   //A través del OpenCatPage() cambiamos la root Page establecida en el ion nav
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private splash:SplashScreen) {
 
     this.homePage = 'HomePage';
 
@@ -63,9 +64,11 @@ export class MenuPage {
       }
       console.log("Cogidas " + this.categories.length + " categorías padre");
       console.log(this.categories);
+      this.splash.hide();
     }).catch((error) => console.log("Error cogiendo categorías " + error.message));
 
   }
+
 
 
   openCatPage(category) {
@@ -83,6 +86,12 @@ export class MenuPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
   }
+  
+
+  ionViewWillLoad(){
+ 
+  }
+ 
 
 
 

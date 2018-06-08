@@ -5,6 +5,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { Account } from '../../models/account/account.interface';
 import firebase from 'firebase';
 import { FormularioPage } from '../../pages/formulario/formulario';
+import { PreloaderProvider } from '../../providers/preloader/preloader';
+
 
 
 
@@ -15,9 +17,6 @@ import { FormularioPage } from '../../pages/formulario/formulario';
 export class LoginComponent {
 
   account = {} as Account;
- 
-  
-
 
   /* Lo contrario que el input...Ahora el componente Login pasará información al padre...(En vez de recibir
   como con el imput...pasará un EventEmitter con la respuesta (result para satisfactoria y error para negativa)) */
@@ -25,16 +24,17 @@ export class LoginComponent {
 
 
   constructor(public auth: AuthProvider, private navCtrl: NavController, private toast: ToastController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController, private loading: PreloaderProvider) {
     //Hay que instanciarlo, ya que al tener el decorator output no lo hemos podido poner en el constructor
     this.loginStatus = new EventEmitter<LoginResponse>();
 
   }
 
-
+ 
 
   async login() {
     try {
+      this.loading.displayPreloader();
       const resultado = await this.auth.login(this.account);
       this.loginStatus.emit(resultado);
 
@@ -52,15 +52,18 @@ export class LoginComponent {
     this.auth.facebookLogin().then((response) => {
 
       if (!response) {
+        this.loading.displayPreloader();
         this.navCtrl.setRoot('MenuPage');
       }
 
       else {
         if (response.errorCode) {
+          this.loading.hidePreloader();
           console.log("Error autenticando con facebook " + response.error.json());
         }
 
         else {
+          this.loading.displayPreloader();
           this.navCtrl.setRoot('MenuPage');
         }
       }

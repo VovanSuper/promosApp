@@ -25,7 +25,7 @@ export class HomePage {
   que nos permite acceder a "hijos" de nuestra página .ts...Hijos serían por ejemplo los elementos del html
   (Recordar que en el html tendremos que darle una identificación ---> #productSlides) */
 
-  @ViewChild('productSlides') productSlides:Slides;
+  @ViewChild('productSlides') productSlides: Slides;
 
 
   constructor(public navCtrl: NavController,
@@ -33,7 +33,9 @@ export class HomePage {
     public shareProv: ShareProvider,
     private preloader: PreloaderProvider) {
 
-      //Imágenes para slider principal
+    this.preloader.hidePreloader();
+
+    //Imágenes para slider principal
     this.moreProductos = [];
     this.imgs = [1, 2];
     this.page = 1;
@@ -51,6 +53,8 @@ export class HomePage {
 
   }
 
+
+
   initializeItems() {
     this.preloader.displayPreloader();
     //Coger productos para mostrarlos en el slider
@@ -66,21 +70,21 @@ export class HomePage {
     }).catch((error) => console.log("Error cogiendo productos " + error.message));
   }
 
-  
-  ionViewDidEnter(){
+
+  ionViewDidEnter() {
     //Programamos el autoplay de los slider que no funciona
 
-    setInterval(()=>{
+    setInterval(() => {
       //Cuando llegue al último, que vuelva
 
-      if(this.productSlides.getActiveIndex() === (this.productSlides.length() -1)){
+      if (this.productSlides.getActiveIndex() === (this.productSlides.length() - 1)) {
         this.productSlides.slideTo(0);
       }
       this.productSlides.slideNext();
-    },3000);
+    }, 3000);
   }
 
-  
+
 
   loadMoreProducts(event) {
     this.page++;
