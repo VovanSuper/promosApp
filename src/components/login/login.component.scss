@@ -16,4 +16,9 @@ login-form{
         text-align: center;
         
     }
+
+    .mdc-layout-grid__cell {
+        display: flex;
+        justify-content: space-around;
+    }
 }
