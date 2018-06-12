@@ -30,7 +30,7 @@ export class LoginComponent {
 
   }
 
- 
+
 
   async login() {
     try {
@@ -71,7 +71,24 @@ export class LoginComponent {
   }
 
   loginWithGoogle() {
-    this.auth.loginWithGoogle();
+    this.auth.loginWithGoogle().then((response) => {
+
+      if(response){
+        if (response.errorCode) {
+          this.loading.hidePreloader();
+          console.log("Error autenticando con google " + response.error.json());
+        }
+      }      
+
+      else {
+        this.navCtrl.setRoot('MenuPage');
+      }
+
+    }, (error) => {
+      this.loading.hidePreloader();
+      console.log("Error autenticando con google " + error.message.json());
+
+    });
   }
 
   NavigateToPageRegister(page: string) {

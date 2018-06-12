@@ -20,8 +20,8 @@ export class AuthProvider {
     private facebook: Facebook,
     private platform: Platform,
     private app: App,
-    private loading:PreloaderProvider
-    ) {
+    private loading: PreloaderProvider
+  ) {
 
     firebase.auth().useDeviceLanguage();
     this.user = this.auth.authState;
@@ -96,30 +96,38 @@ export class AuthProvider {
     this.auth.auth.signOut();
   }
 
-  loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    this.loading.displayPreloader();
+  loginWithGoogle(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
 
 
-    firebase.auth().signInWithRedirect(provider).then(() => {
-      firebase.auth().getRedirectResult().then(result => {
-        // This gives you a Google Access Token.
-        // You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
+      const provider = new firebase.auth.GoogleAuthProvider();
+      this.loading.displayPreloader();
 
-        this.app.getActiveNav().setRoot('MenuPage');
-        console.log(token, user);
-      }).catch(function (error) {
+      firebase.auth().signInWithRedirect(provider).then(() => {
+        firebase.auth().getRedirectResult().then(result => {
+          // This gives you a Google Access Token.
+          // You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;         
+          resolve();
+          console.log(token, user);
+        }).catch(function (error) {
+          this.loading.hidePreloader();
+          reject();
+          // Handle Errors here.
+          console.log(error.message);
+        });
+      }).catch((error) => {
         this.loading.hidePreloader();
+        reject();
         // Handle Errors here.
         console.log(error.message);
       });
-    })
 
 
-
+    });
 
   }
 
