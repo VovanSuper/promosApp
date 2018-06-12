@@ -14,3 +14,38 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// @import "node_modules/@angular-mdc/theme/material";
+$input-bg: #cccccc82;
+
+@import "node_modules/@material/layout-grid/mdc-layout-grid";
+// @import "node_modules/@material/button/mdc-button";
+
+page-login {
+  
+  padding: 0;
+
+  ion-content {
+    padding: 0 !important;
+
+    .scroll-content {
+      padding: 0 !important;
+    }
+    ion-item.item.item-input {
+        background: $input-bg !important;
+        border: none !important;
+        text-decoration: none;
+    
+        & > .item-inner {
+          border-bottom: none !important;
+    
+          outline: none !important;
+          outline-color: transparent !important;
+          }
+      }
+    }
+}
+.item-md.item-input.item-input-has-focus .item-inner {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
