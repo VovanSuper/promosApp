@@ -18,40 +18,51 @@
         </ion-item>
       </div>
 
-
       <!-- <div class="mdc-layout-grid"> -->
       <!-- <div class="mdc-layout-grid__inner"> -->
       <!-- <ion-row align-items-center class="fila">
             <ion-col col-2></ion-col> -->
-      <div class="mdc-layout-grid__cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid--align-right
+        mdc-layout-grid__cell--span-6-desktop
+        mdc-layout-grid__cell--span-4-tablet
+        mdc-layout-grid__cell--span-2-phone">
         <!-- <ion-col col-4> -->
-        <button class="mdc-button mdc-ripple-surface" ion-button (click)="NavigateToPageRegister()" color="secondary">Registrarse</button>
-        <!-- </ion-col> -->
-        <!-- </div>
-      <div class="mdc-layout-grid__cell"> -->
-        <!-- <ion-col col-4> -->
-        <button class="mdc-button" ion-button (click)="login()">Entrar</button>
+        <button ion-button full class="mdc-button mdc-ripple-surface" (click)="NavigateToPageRegister()" color="secondary">Registrarse</button>
         <!-- </ion-col> -->
       </div>
 
-      <hr>
+      <div class="mdc-layout-grid__cell mdc-layout-grid--align-left
+        mdc-layout-grid__cell--span-6-desktop
+        mdc-layout-grid__cell--span-4-tablet
+        mdc-layout-grid__cell--span-2-phone">
+        <!-- <ion-col col-4> -->
+        <button ion-button full class="mdc-button" (click)="login()">Entrar</button>
+        <!-- </ion-col> -->
+      </div>
+
       <!-- <ion-col col-2></ion-col>
           </ion-row> -->
       <!-- <ion-row align-items-center class="fila">
             <ion-col col-2></ion-col> -->
-      <div class="mdc-layout-grid__cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid--align-right
+        mdc-layout-grid__cell--span-6-desktop
+        mdc-layout-grid__cell--span-4-tablet
+        mdc-layout-grid__cell--span-2-phone">
         <!-- <ion-col col-4> -->
-        <button ion-button (click)="loginWithFacebook()">
-          <ion-icon name="logo-facebook">&nbsp;</ion-icon>
+        <button ion-button full (click)="loginWithFacebook()">
+          <ion-icon name="logo-facebook"></ion-icon>
           &nbsp; Facebook
         </button>
         <!-- </ion-col> -->
-        <!-- </div> -->
+      </div>
 
-        <!-- <div class="mdc-layout-grid__cell"> -->
+      <div class="mdc-layout-grid__cell mdc-layout-grid--align-left
+        mdc-layout-grid__cell--span-6-desktop
+        mdc-layout-grid__cell--span-4-tablet
+        mdc-layout-grid__cell--span-2-phone">
         <!-- <ion-col col-4> -->
-        <button ion-button (click)="loginWithGoogle()">
-          <ion-icon name="logo-googleplus">&nbsp;</ion-icon>
+        <button ion-button full (click)="loginWithGoogle()">
+          <ion-icon name="logo-googleplus"></ion-icon>
           &nbsp; Google+
         </button>
         <!-- </ion-col> -->
@@ -62,7 +73,7 @@
       <!-- <ion-col col-2></ion-col> -->
       <div class="mdc-layout-grid__cell">
         <!-- <ion-col col-8> -->
-        <button ion-button (click)="resetPassword(account.email)" style="text-align: center"> ¿Olvidaste la contraseña? </button>
+        <button ion-button full (click)="resetPassword(account.email)" style="text-align: center"> ¿Olvidaste la contraseña? </button>
         <!-- </ion-col> -->
       </div>
       <!-- <ion-col col-2></ion-col> -->

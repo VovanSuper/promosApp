@@ -14,16 +14,20 @@
 
 
 <ion-content padding>
-  <img src="assets/imgs/logo.png" alt="Logo" class="logo" />
-  <img src="http://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Filovealcazar.com&s=6&e=m" alt="Código QR" class="rota-horizontal"/>
 
-  <p style="text-align: center;" wrap-text> Haz un pantallazo de este cupón, y preséntalo en :</p>
-  <p style="text-align: center;" wrap-text [innerHTML]="establecimiento"> </p>
-  <br/>
-  <br/>
-  <p style="text-align: center;" wrap-text [innerHTML]="titulo"></p>
-  <br/>
-  <br/>
-  <button ion-button block (click)="volver()">Volver</button>
-
+  <ion-card>
+    <img src="assets/imgs/logo.png" alt="Logo" class="logo" />
+    <img src="http://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Filovealcazar.com&s=6&e=m" alt="Código QR" class="rota-horizontal"
+    />
+    <ion-card-content>
+      <p wrap-text> Haz un pantallazo de este cupón, y preséntalo en :</p>
+      <p wrap-text [innerHTML]="establecimiento"> </p>
+      <br/>
+      <br/>
+      <p class="adv" wrap-text [innerHTML]="titulo"></p>
+      <br/>
+      <br/>
+      <button ion-button block (click)="volver()">Volver</button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

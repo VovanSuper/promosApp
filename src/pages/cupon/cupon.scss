@@ -1,5 +1,21 @@
 page-cupon {
 
+    ion-card {
+        @include semi-gb($card-surface-bg);
+
+        ion-card-content {
+            p {
+                text-align: center;
+
+                &.adv{
+                    font-weight: bolder;
+                    font-size: large;
+                }
+            }
+        }
+    }
+
+    
     .logo{
         margin:0 auto !important;
         text-align: center;

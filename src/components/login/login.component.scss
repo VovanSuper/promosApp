@@ -17,8 +17,27 @@ login-form{
         
     }
 
-    .mdc-layout-grid__cell {
-        display: flex;
-        justify-content: space-around;
-    }
+    ion-item.item.item-input {
+        background: $input-bg !important;
+        border: none !important;
+        text-decoration: none;
+    
+        & > .item-inner {
+          border-bottom: none !important;
+    
+          outline: none !important;
+          outline-color: none !important;
+        }
+
+        ion-label {
+            &.mdc-floating-label {
+                color: #6589d4; 
+            }
+        }
+      }
+
+    // .mdc-layout-grid__cell.cell-button {
+    //     display: flex;
+    //     justify-content: space-around;
+    // }
 }

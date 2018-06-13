@@ -58,3 +58,9 @@ $colors: (
 // --------------------------------------------------
 @import "roboto";
 
+$card-surface-bg: rgba($color: #ccc, $alpha: 0.6) !important;
+
+@mixin semi-gb($param) {
+  background-color: $param;
+}
+

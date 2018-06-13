@@ -21,31 +21,16 @@ $input-bg: #cccccc82;
 @import "node_modules/@material/layout-grid/mdc-layout-grid";
 // @import "node_modules/@material/button/mdc-button";
 
-page-login {
-  
-  padding: 0;
-
-  ion-content {
-    padding: 0 !important;
-
-    .scroll-content {
-      padding: 0 !important;
-    }
-    ion-item.item.item-input {
-        background: $input-bg !important;
-        border: none !important;
-        text-decoration: none;
-    
-        & > .item-inner {
-          border-bottom: none !important;
-    
-          outline: none !important;
-          outline-color: transparent !important;
-          }
-      }
-    }
-}
 .item-md.item-input.item-input-has-focus .item-inner {
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+$header-surface-bg: rgba($color: #2c2c2c, $alpha: 0.6) !important;
+
+ion-header {
+  @include semi-gb($header-surface-bg);
+
+  ion-navbar {
+    background: transparent;
+  }
 }
