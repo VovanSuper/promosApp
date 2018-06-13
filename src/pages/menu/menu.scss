@@ -2,7 +2,7 @@ ion-menu {
     .menu-inner {
         
         ion-content {
-            background: $card-surface-bg;
+            @include semi-gb($card-surface-bg);
         }
         ion-list ion-item{
             background: transparentize($color: #464545, $amount: 0.8) !important;

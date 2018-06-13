@@ -1,5 +1,5 @@
 <form [formGroup]="Emailform" (ngSubmit)="sendInfo()">
- 
+
   <ion-item margin-bottom>
     <span ion-button color="primary" text-center block (click)="retrieveAttachment()">Adjuntar imagen</span>
   </ion-item>
@@ -44,9 +44,9 @@
 
   <ion-row id="imagesRow">
     <div *ngFor="let image of attachmentArray;let i=index" class="imagenes">
-    <img *ngIf= "image && image != null" [src]="image" class="imagen">
-    <ion-icon name="close" *ngIf= "image && image != null" (click)="eliminaImagen(i)"></ion-icon>
-  </div>
+      <img *ngIf="image && image != null" [src]="image" class="imagen">
+      <ion-icon name="close" *ngIf="image && image != null" (click)="eliminaImagen(i)"></ion-icon>
+    </div>
   </ion-row>
 
 </form>

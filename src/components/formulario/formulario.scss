@@ -1,3 +1,7 @@
+ion-item {
+    @include semi-gb($card-surface-bg);
+}
+
 formulario {
 
     #myInput {
@@ -10,11 +14,11 @@ formulario {
 
 
     #imagesRow{
-        
-        ion-row{
-            text-align: justify;
-        }
-           
+            flex-wrap: nowrap !important;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            align-content: center;          
                
         img {
             display: inline-block;
@@ -33,6 +37,7 @@ formulario {
 
 .imagenes{
     display:flex;
+    flex-shrink: 1;
 }
 
 .imagen{
